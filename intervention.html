@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intervention</title>
+    <style>
+        /* Réinitialisation des marges et des bordures */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Corps de la page */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b); /* Dégradé doux */
+            color: white;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        /* Style pour l'en-tête */
+        header {
+            width: 100%;
+            text-align: center;
+            padding: 20px 0;
+            background-color: #000000; /* Fond opaque, sans transparence */
+            position: relative;
+        }
+
+        /* Style du bouton Retour */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #feb47b;
+            color: white;
+            font-size: 1.2rem;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .back-button:hover {
+            background-color: #ff7e5f;
+        }
+
+        /* Style du titre en majuscules */
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            text-transform: uppercase; /* Met tout le texte en majuscules */
+        }
+
+        /* Style du formulaire */
+        .content {
+            width: 80%;
+            max-width: 600px;
+            margin-top: 40px;
+            padding: 20px;
+            background-color: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+            border-radius: 10px;
+        }
+
+        /* Style des champs du formulaire */
+        label {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #fff;
+            font-size: 1rem;
+        }
+
+        /* Style du bouton d'envoi */
+        .btn {
+            background-color: #ff7e5f;
+            color: white;
+            font-size: 1.2rem;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .btn:hover {
+            background-color: #feb47b;
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <!-- Bouton Retour -->
+        <a href="index.html">
+            <button class="back-button">Retour</button>
+        </a>
+        <h1>INTERVENTION</h1>
+    </header>
+    <div class="content">
+        <form id="interventionForm">
+            <label for="pseudo">Pseudo Discord:</label>
+            <input type="text" id="pseudo" name="pseudo" required>
+
+            <label for="motif">Motif:</label>
+            <textarea id="motif" name="motif" rows="4" required></textarea>
+
+            <label for="heure">Heure:</label>
+            <input type="time" id="heure" name="heure" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" name="date" required>
+
+            <label for="poste">Poste:</label>
+            <select id="poste" name="poste">
+                <option value="ssiap1">SSIAP 1</option>
+                <option value="ssiap2">SSIAP 2</option>
+                <option value="autre">Autre</option>
+            </select>
+
+            <button type="submit" class="btn">Envoyer</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('interventionForm').addEventListener('submit', function(e) {
+            e.preventDefault(); // Empêche l'envoi normal du formulaire
+
+            const pseudo = document.getElementById('pseudo').value;
+            const motif = document.getElementById('motif').value;
+            const heure = document.getElementById('heure').value;
+            const date = document.getElementById('date').value;
+            const poste = document.getElementById('poste').value;
+
+            const webhookUrl = "https://discord.com/api/webhooks/1311066279486165052/_mjI6kNHKCK0YA68o3Hy5S41m3Hp3gkLNszq9Rh-HhE-eOeN8ktw35uc5VGzn7Hj0llF";
+
+            const embed = {
+                title: "Intervention - Nouvelle Entrée 🔥",
+                description: `**Nouveau Rapport d'Intervention**\n\n**Pseudo Discord**: ${pseudo} 🔐\n**Motif**: ${motif} 💬\n**Heure**: ${heure} ⏰\n**Date**: ${date} 📅\n**Poste**: ${poste} 🧯`,
+                color: 0xFF5733,  // Code couleur hexadécimal pour l'embed
+                timestamp: new Date(),
+                footer: {
+                    text: "Système d'Intervention ⚠️"
+                }
+            };
+
+            const payload = JSON.stringify({
+                embeds: [embed]
+            });
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: payload,
+            })
+            .then(response => response.json())
+            .then(data => {
+                console.log("Message envoyé avec succès:", data);
+                alert("Formulaire soumis avec succès !");
+            })
+            .catch((error) => {
+                console.error("Erreur lors de l'envoi:", error);
+                alert("Erreur lors de l'envoi du formulaire.");
+            });
+        });
+    </script>
+</body>
+</html>

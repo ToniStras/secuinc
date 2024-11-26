@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sécurité Incendie SL</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>SÉCURITÉ INCENDIE SL</h1>
+    </header>
+    <div class="content">
+        <div class="button-container">
+            <!-- Bouton "REGISTRE DE SÉCURITÉ" avec redirection -->
+            <button class="btn" id="btn-1">REGISTRE DE SÉCURITÉ</button>
+            <button class="btn" id="btn-2">INTERVENTION</button>
+        </div>
+    </div>
+
+    <script>
+        // Ajouter un événement pour rediriger lorsque l'on clique sur "REGISTRE DE SÉCURITÉ"
+        document.getElementById('btn-1').addEventListener('click', function() {
+            // Rediriger vers la page registredesecu.html
+            window.location.href = "registredesecu.html";
+        });
+
+        // Ajouter un événement pour rediriger lorsque l'on clique sur "INTERVENTION"
+        document.getElementById('btn-2').addEventListener('click', function() {
+            // Rediriger vers la page intervention.html
+            window.location.href = "intervention.html";
+        });
+    </script>
+</body>
+</html>
